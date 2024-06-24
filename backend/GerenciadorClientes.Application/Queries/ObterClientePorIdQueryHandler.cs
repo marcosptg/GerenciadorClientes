@@ -6,9 +6,9 @@ namespace GerenciadorClientes.Application.Queries
 {
     public class ObterClientePorIdQueryHandler : IRequestHandler<ObterClientePorIdQuery, ClienteModel>
     {
-        private readonly IClienteReadOnlyRepository _repository;
+        private readonly IClienteProjectionRepository _repository;
 
-        public ObterClientePorIdQueryHandler(IClienteReadOnlyRepository repository)
+        public ObterClientePorIdQueryHandler(IClienteProjectionRepository repository)
         {
             _repository = repository;
         }

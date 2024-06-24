@@ -1,5 +1,4 @@
 ﻿using GerenciadorClientes.Domain.Dtos;
-using Microsoft.Extensions.Configuration;
 using MongoDB.Driver;
 
 namespace GerenciadorClientes.Infrastructure.Data
@@ -8,9 +7,9 @@ namespace GerenciadorClientes.Infrastructure.Data
     {
         private readonly IMongoDatabase _database;
 
-        public MongoDbContext(IMongoClient mongoClient, IConfiguration configuration)
+        public MongoDbContext(IMongoDatabase database)
         {
-            _database = mongoClient.GetDatabase(configuration["ConnectionStrings:MongoDbDatabase"]);
+            _database = database;
         }
 
         public IMongoCollection<ClienteModel> Clientes => _database.GetCollection<ClienteModel>("Clientes");

@@ -1,0 +1,17 @@
+<div>
+  <h2>{{ cliente.id ? 'Editar Cliente' : 'Adicionar Cliente' }}</h2>
+  <form (ngSubmit)="saveCliente()">
+    <label for="nomeEmpresa">Nome da Empresa:</label>
+    <input type="text" id="nomeEmpresa" [(ngModel)]="cliente.nomeEmpresa" name="nomeEmpresa" required />
+
+    <label for="porte">Porte da Empresa:</label>
+    <select id="porte" [(ngModel)]="cliente.porte" name="porte">
+      <option value="Pequena">Pequena</option>
+      <option value="Media">Média</option>
+      <option value="Grande">Grande</option>
+    </select>
+
+    <button type="submit">Salvar</button>
+    <button type="button" (click)="cancel()">Cancelar</button>
+  </form>
+</div>

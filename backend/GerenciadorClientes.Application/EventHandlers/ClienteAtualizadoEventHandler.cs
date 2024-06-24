@@ -6,22 +6,21 @@ using Microsoft.Extensions.Logging;
 
 namespace GerenciadorClientes.Application.EventHandlers
 {
-
-    public class ClienteCriadoEventHandler : INotificationHandler<ClienteCriadoEvent>
+    public class ClienteAtualizadoEventHandler : INotificationHandler<ClienteAtualizadoEvent>
     {
         private readonly IClienteProjectionRepository _clienteProjectionRepository;
-        private readonly ILogger<ClienteCriadoEventHandler> _logger;
+        private readonly ILogger<ClienteAtualizadoEventHandler> _logger;
 
-        public ClienteCriadoEventHandler(
-            ILogger<ClienteCriadoEventHandler> logger,
-            IClienteProjectionRepository clienteProjectionRepository
-            )
+        public ClienteAtualizadoEventHandler(
+            ILogger<ClienteAtualizadoEventHandler> logger,
+            IClienteProjectionRepository clienteReadOnlyRepository
+        )
         {
             _logger = logger;
-            _clienteProjectionRepository = clienteProjectionRepository;
+            _clienteProjectionRepository = clienteReadOnlyRepository;
         }
 
-        public async Task Handle(ClienteCriadoEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(ClienteAtualizadoEvent notification, CancellationToken cancellationToken)
         {
             try
             {
@@ -32,15 +31,14 @@ namespace GerenciadorClientes.Application.EventHandlers
                     Porte = notification.Porte.ToString()
                 };
 
-                var success = await _clienteProjectionRepository.InsertAsync(clienteReadModel);
+                var success = await _clienteProjectionRepository.UpdateAsync(clienteReadModel);
                 if (!success)
-                    throw new Exception("Erro ao inserir cliente no MongoDB");
+                    throw new Exception("Erro ao atualizar cliente no MongoDB");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Erro ao processar ClienteCriadoEvent");
+                _logger.LogError(ex, "Erro ao processar ClienteAtualizadoEvent");
             }
         }
     }
 }
-

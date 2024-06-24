@@ -1,14 +1,19 @@
-﻿using GerenciadorClientes.Domain.IRepositories;
+﻿using GerenciadorClientes.Domain.Events;
+using GerenciadorClientes.Domain.IRepositories;
 using MediatR;
 
 namespace GerenciadorClientes.Application.Commands
 {
     public class RemoverClienteCommandHandler : IRequestHandler<RemoverClienteCommand, bool>
     {
+        private readonly IMediator _mediator;
         private readonly IClienteAggregationRepository _repository;
 
-        public RemoverClienteCommandHandler(IClienteAggregationRepository repository)
+        public RemoverClienteCommandHandler(
+            IMediator mediator,
+            IClienteAggregationRepository repository)
         {
+            _mediator = mediator;
             _repository = repository;
         }
 
@@ -20,6 +25,8 @@ namespace GerenciadorClientes.Application.Commands
                 return false;
 
             await _repository.RemoveAsync(cliente);
+
+            await _mediator.Publish(new ClienteRemovidoEvent(cliente.Id), cancellationToken);
 
             return true;
         }

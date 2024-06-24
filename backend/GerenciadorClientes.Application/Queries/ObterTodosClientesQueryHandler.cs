@@ -6,9 +6,9 @@ namespace GerenciadorClientes.Application.Queries
 {
     public class ObterTodosClientesQueryHandler : IRequestHandler<ObterTodosClientesQuery, List<ClienteModel>>
     {
-        private readonly IClienteReadOnlyRepository _clienteReadRepository;
+        private readonly IClienteProjectionRepository _clienteReadRepository;
 
-        public ObterTodosClientesQueryHandler(IClienteReadOnlyRepository clienteReadRepository) =>
+        public ObterTodosClientesQueryHandler(IClienteProjectionRepository clienteReadRepository) =>
             _clienteReadRepository = clienteReadRepository;
 
         public Task<List<ClienteModel>> Handle(ObterTodosClientesQuery request, CancellationToken cancellationToken) =>

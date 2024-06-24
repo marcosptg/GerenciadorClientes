@@ -20,18 +20,25 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "GerenciadorClientes API", Version = "v1" });
 });
 
+
 // Configuração do DbContext para SQL Server
 builder.Services.AddDbContext<SqlServerDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration["ConnectionStrings:SqlServer"]));
 
-// Configuração do MongoDB
 builder.Services.AddSingleton<IMongoClient>(sp =>
-    new MongoClient(builder.Configuration.GetConnectionString("MongoDbConnection")));
+    new MongoClient(builder.Configuration["ConnectionStrings:MongoDb"]));
 builder.Services.AddSingleton<MongoDbContext>();
+
+builder.Services.AddSingleton(sp =>
+{
+    var client = sp.GetRequiredService<IMongoClient>();
+    var databaseName = builder.Configuration["MongoDbSettings:DatabaseName"];
+    return client.GetDatabase(databaseName);
+});
 
 // Configuração dos repositórios
 builder.Services.AddScoped<IClienteAggregationRepository, ClienteAggregationRepository>();
-builder.Services.AddScoped<IClienteReadOnlyRepository, ClienteReadOnlyRepository>();
+builder.Services.AddScoped<IClienteProjectionRepository, ClienteProjectionRepository>();
 
 // Configuração do MediatR
 builder.Services.AddMediatR(cfg =>
