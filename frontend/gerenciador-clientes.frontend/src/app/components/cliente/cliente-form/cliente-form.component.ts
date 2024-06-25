@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClienteService } from '../../../services/cliente.service';
 import { Cliente } from '../../../models/cliente.model';
+import { Porte } from '../../../enums/porte.enum';
 
 @Component({
   selector: 'app-cliente-form',
@@ -9,7 +10,7 @@ import { Cliente } from '../../../models/cliente.model';
   styleUrls: ['./cliente-form.component.css']
 })
 export class ClienteFormComponent implements OnInit {
-  cliente: Cliente = { id: 0, nomeEmpresa: '', porte: 'Pequena' };
+  cliente: Cliente = { id: 0, nomeEmpresa: '', porte: Porte.Pequena };
 
   constructor(
     private clienteService: ClienteService,

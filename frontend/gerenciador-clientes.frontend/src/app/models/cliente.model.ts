@@ -1,5 +1,7 @@
+import { Porte } from "../enums/porte.enum";
+
 export interface Cliente {
   id: number;
   nomeEmpresa: string;
-  porte: 'Pequena' | 'Media' | 'Grande';
+  porte: Porte;
 }
