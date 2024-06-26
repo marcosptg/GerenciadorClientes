@@ -1,4 +1,4 @@
-# Gerenciador de Clientes - API e SPA seguindo DDD e CQRS
+# Gerenciador de Clientes - API e SPA utilizando DDD e CQRS
 
 Este projeto é uma implementação de uma API de gerenciamento de clientes seguindo os princípios do Domain-Driven Design (DDD) e Command Query Responsibility Segregation (CQRS).
 
