@@ -133,7 +133,7 @@ npm install
 ng serve
 ```
 
-Executando os Testes
+### Executando os Testes
 Para executar os testes unitários do front-end, utilize o seguinte comando:
 
 ```sh
