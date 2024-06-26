@@ -14,27 +14,27 @@ namespace GerenciadorClientes.Infrastructure.Repositories
             _clientes = database.GetCollection<ClienteModel>("clientes");
         }
 
-        public async Task<bool> InsertAsync(ClienteModel cliente)
+        public async Task<bool> InsertAsync(ClienteModel cliente, CancellationToken cancellationToken)
         {
-            await _clientes.InsertOneAsync(cliente);
+            await _clientes.InsertOneAsync(cliente, new InsertOneOptions(), cancellationToken);
             return true;
         }
 
-        public async Task<bool> UpdateAsync(ClienteModel cliente)
+        public async Task<bool> UpdateAsync(ClienteModel cliente, CancellationToken cancellationToken)
         {
-            var result = await _clientes.ReplaceOneAsync(c => c.Id == cliente.Id, cliente);
+            var result = await _clientes.ReplaceOneAsync(c => c.Id == cliente.Id, cliente, new ReplaceOptions(), cancellationToken);
             return result.IsAcknowledged && result.ModifiedCount > 0;
         }
 
-        public async Task<bool> RemoveAsync(int id)
+        public async Task<bool> RemoveAsync(int id, CancellationToken cancellationToken)
         {
-            var result = await _clientes.DeleteOneAsync(c => c.Id == id);
+            var result = await _clientes.DeleteOneAsync(c => c.Id == id, cancellationToken);
             return result.IsAcknowledged && result.DeletedCount > 0;
         }
 
-        public Task<List<ClienteModel>> GetAllAsync() => _clientes.Find(_ => true).ToListAsync();
+        public Task<List<ClienteModel>> GetAllAsync(CancellationToken cancellationToken) => _clientes.Find(_ => true).ToListAsync(cancellationToken);
 
-        public Task<ClienteModel> GetByIdAsync(int id) => _clientes.Find(cliente => cliente.Id == id).FirstOrDefaultAsync();
+        public Task<ClienteModel> GetByIdAsync(int id, CancellationToken cancellationToken) => _clientes.Find(cliente => cliente.Id == id).FirstOrDefaultAsync(cancellationToken);
     }
 
 }

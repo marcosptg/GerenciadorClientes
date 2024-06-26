@@ -31,7 +31,7 @@ namespace GerenciadorClientes.Application.EventHandlers
                     Porte = notification.Porte.ToString()
                 };
 
-                var success = await _clienteProjectionRepository.UpdateAsync(clienteReadModel);
+                var success = await _clienteProjectionRepository.UpdateAsync(clienteReadModel, cancellationToken);
                 if (!success)
                     throw new Exception("Erro ao atualizar cliente no MongoDB");
             }

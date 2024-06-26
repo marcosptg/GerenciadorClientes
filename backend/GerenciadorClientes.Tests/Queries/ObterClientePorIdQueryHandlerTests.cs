@@ -23,7 +23,7 @@ namespace GerenciadorClientes.Tests.Application.Queries
             // Arrange
             var cliente = new ClienteModel { Id = 1, NomeEmpresa = "Empresa A", Porte = "Pequena" };
             var query = new ObterClientePorIdQuery(cliente.Id);
-            _clienteRepository.GetByIdAsync(cliente.Id).Returns(cliente);
+            _clienteRepository.GetByIdAsync(cliente.Id, CancellationToken.None).Returns(cliente);
 
             // Act
             var result = await _handler.Handle(query, CancellationToken.None);

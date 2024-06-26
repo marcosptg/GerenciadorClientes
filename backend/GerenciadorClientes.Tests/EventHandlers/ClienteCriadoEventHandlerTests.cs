@@ -26,13 +26,13 @@ namespace GerenciadorClientes.Tests.Application.EventHandlers
         {
             // Arrange
             var clienteCriadoEvent = new ClienteCriadoEvent(1, "Empresa A", PorteEmpresa.Pequena);
-            _clienteProjectionRepository.InsertAsync(Arg.Any<ClienteModel>()).Returns(true);
+            _clienteProjectionRepository.InsertAsync(Arg.Any<ClienteModel>(), CancellationToken.None).Returns(true);
 
             // Act
             await _handler.Handle(clienteCriadoEvent, CancellationToken.None);
 
             // Assert
-            await _clienteProjectionRepository.Received(1).InsertAsync(Arg.Any<ClienteModel>());
+            await _clienteProjectionRepository.Received(1).InsertAsync(Arg.Any<ClienteModel>(), CancellationToken.None);
         }
 
         [Fact]
@@ -40,13 +40,13 @@ namespace GerenciadorClientes.Tests.Application.EventHandlers
         {
             // Arrange
             var clienteCriadoEvent = new ClienteCriadoEvent(1, "Empresa A", PorteEmpresa.Pequena);
-            _clienteProjectionRepository.InsertAsync(Arg.Any<ClienteModel>()).Returns(false);
+            _clienteProjectionRepository.InsertAsync(Arg.Any<ClienteModel>(), CancellationToken.None).Returns(false);
 
             // Act
             await _handler.Handle(clienteCriadoEvent, CancellationToken.None);
 
             // Assert
-            await _clienteProjectionRepository.Received(1).InsertAsync(Arg.Any<ClienteModel>());
+            await _clienteProjectionRepository.Received(1).InsertAsync(Arg.Any<ClienteModel>(), CancellationToken.None);
             _logger.Received(1).LogError(Arg.Any<Exception>(), "Erro ao processar ClienteCriadoEvent");
         }
     }

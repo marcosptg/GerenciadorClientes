@@ -31,7 +31,7 @@ namespace GerenciadorClientes.Tests.Application.Commands
             await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            await _clienteRepository.Received(1).AddAsync(Arg.Any<Cliente>());
+            await _clienteRepository.Received(1).AddAsync(Arg.Any<Cliente>(), CancellationToken.None);
             await _mediator.Received(1).Publish(Arg.Any<ClienteCriadoEvent>(), CancellationToken.None);
         }
     }

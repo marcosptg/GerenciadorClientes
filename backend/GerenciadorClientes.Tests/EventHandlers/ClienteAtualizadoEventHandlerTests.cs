@@ -26,13 +26,13 @@ namespace GerenciadorClientes.Tests.Application.EventHandlers
         {
             // Arrange
             var clienteAtualizadoEvent = new ClienteAtualizadoEvent(1, "Empresa B", PorteEmpresa.Media);
-            _clienteProjectionRepository.UpdateAsync(Arg.Any<ClienteModel>()).Returns(true);
+            _clienteProjectionRepository.UpdateAsync(Arg.Any<ClienteModel>(), CancellationToken.None).Returns(true);
 
             // Act
             await _handler.Handle(clienteAtualizadoEvent, CancellationToken.None);
 
             // Assert
-            await _clienteProjectionRepository.Received(1).UpdateAsync(Arg.Any<ClienteModel>());
+            await _clienteProjectionRepository.Received(1).UpdateAsync(Arg.Any<ClienteModel>(), CancellationToken.None);
         }
 
         [Fact]
@@ -40,13 +40,13 @@ namespace GerenciadorClientes.Tests.Application.EventHandlers
         {
             // Arrange
             var clienteAtualizadoEvent = new ClienteAtualizadoEvent(1, "Empresa B", PorteEmpresa.Media);
-            _clienteProjectionRepository.UpdateAsync(Arg.Any<ClienteModel>()).Returns(false);
+            _clienteProjectionRepository.UpdateAsync(Arg.Any<ClienteModel>(), CancellationToken.None).Returns(false);
 
             // Act
             await _handler.Handle(clienteAtualizadoEvent, CancellationToken.None);
 
             // Assert
-            await _clienteProjectionRepository.Received(1).UpdateAsync(Arg.Any<ClienteModel>());
+            await _clienteProjectionRepository.Received(1).UpdateAsync(Arg.Any<ClienteModel>(), CancellationToken.None);
             _logger.Received(1).LogError(Arg.Any<Exception>(), "Erro ao processar ClienteAtualizadoEvent");
         }
     }

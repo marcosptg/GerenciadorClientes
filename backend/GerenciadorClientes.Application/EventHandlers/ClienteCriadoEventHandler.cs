@@ -32,7 +32,7 @@ namespace GerenciadorClientes.Application.EventHandlers
                     Porte = notification.Porte.ToString()
                 };
 
-                var success = await _clienteProjectionRepository.InsertAsync(clienteReadModel);
+                var success = await _clienteProjectionRepository.InsertAsync(clienteReadModel, cancellationToken);
                 if (!success)
                     throw new Exception("Erro ao inserir cliente no MongoDB");
             }

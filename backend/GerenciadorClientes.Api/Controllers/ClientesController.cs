@@ -15,13 +15,13 @@ namespace GerenciadorClientes.Api.Controllers
         public ClientesController(IMediator mediator) => _mediator = mediator;
 
         [HttpGet]
-        public async Task<ActionResult<List<ClienteModel>>> GetClientes()
-            => Ok(await _mediator.Send(new ObterTodosClientesQuery()));
+        public async Task<ActionResult<List<ClienteModel>>> GetClientes(CancellationToken cancellationToken)
+            => Ok(await _mediator.Send(new ObterTodosClientesQuery(), cancellationToken));
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ClienteModel>> GetCliente(int id)
+        public async Task<ActionResult<ClienteModel>> GetCliente(int id, CancellationToken cancellationToken)
         {
-            var cliente = await _mediator.Send(new ObterClientePorIdQuery(id));
+            var cliente = await _mediator.Send(new ObterClientePorIdQuery(id), cancellationToken);
 
             if (cliente == null)
                 return NotFound();
@@ -30,9 +30,9 @@ namespace GerenciadorClientes.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> CreateCliente(CriarClienteCommand command)
+        public async Task<ActionResult<int>> CreateCliente(CriarClienteCommand command, CancellationToken cancellationToken)
         {
-            var clienteId = await _mediator.Send(command);
+            var clienteId = await _mediator.Send(command, cancellationToken);
 
             if (clienteId == 0)
                 return BadRequest($"Não foi possível criar o cliente");
@@ -41,9 +41,9 @@ namespace GerenciadorClientes.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateCliente(AtualizarClienteCommand command)
+        public async Task<IActionResult> UpdateCliente(AtualizarClienteCommand command, CancellationToken cancellationToken)
         {
-            var atualizado = await _mediator.Send(command);
+            var atualizado = await _mediator.Send(command, cancellationToken);
 
             if (!atualizado)
                 return BadRequest($"Não foi possível atualizar o cliente de id: {command.Id}");
@@ -52,9 +52,9 @@ namespace GerenciadorClientes.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCliente(int id)
+        public async Task<IActionResult> DeleteCliente(int id, CancellationToken cancellationToken)
         {
-            var removido = await _mediator.Send(new RemoverClienteCommand(id));
+            var removido = await _mediator.Send(new RemoverClienteCommand(id), cancellationToken);
 
             if (!removido)
                 return BadRequest($"Não foi possível remover o cliente de id: {id}");

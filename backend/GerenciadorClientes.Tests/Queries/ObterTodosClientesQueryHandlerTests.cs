@@ -26,7 +26,7 @@ namespace GerenciadorClientes.Tests.Application.Queries
                 new ClienteModel { Id = 2, NomeEmpresa = "Empresa B", Porte = "Media" }
             };
             var query = new ObterTodosClientesQuery();
-            _clienteRepository.GetAllAsync().Returns(clientes);
+            _clienteRepository.GetAllAsync(CancellationToken.None).Returns(clientes);
 
             // Act
             var result = await _handler.Handle(query, CancellationToken.None);

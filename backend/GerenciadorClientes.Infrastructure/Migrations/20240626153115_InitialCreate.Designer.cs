@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GerenciadorClientes.Infrastructure.Migrations
 {
     [DbContext(typeof(SqlServerDbContext))]
-    [Migration("20240623013943_InitialCreate")]
+    [Migration("20240626153115_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -33,7 +33,9 @@ namespace GerenciadorClientes.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("NomeEmpresa")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("Porte")
                         .HasColumnType("int");

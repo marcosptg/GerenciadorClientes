@@ -4,10 +4,10 @@ namespace GerenciadorClientes.Domain.IRepositories
 {
     public interface IClienteAggregationRepository
     {
-        Task<Cliente?> GetByIdAsync(int id);
-        Task AddAsync(Cliente cliente);
-        Task UpdateAsync(Cliente cliente);
-        Task RemoveAsync(Cliente cliente);
+        Task<Cliente?> GetByIdAsync(int id, CancellationToken cancellationToken);
+        Task AddAsync(Cliente cliente, CancellationToken cancellationToken);
+        Task UpdateAsync(Cliente cliente, CancellationToken cancellationToken);
+        Task RemoveAsync(Cliente cliente, CancellationToken cancellationToken);
     }
 
 }

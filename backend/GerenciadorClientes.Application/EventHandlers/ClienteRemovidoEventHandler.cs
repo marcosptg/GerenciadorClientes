@@ -23,7 +23,7 @@ namespace GerenciadorClientes.Application.EventHandlers
         {
             try
             {
-                var success = await _clienteProjectionRepository.RemoveAsync(notification.Id);
+                var success = await _clienteProjectionRepository.RemoveAsync(notification.Id, cancellationToken);
                 if (!success)
                     throw new Exception("Erro ao remover cliente no MongoDB");
             }

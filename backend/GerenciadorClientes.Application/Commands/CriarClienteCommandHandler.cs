@@ -15,8 +15,8 @@ namespace GerenciadorClientes.Application.Commands
 
         public async Task<int> Handle(CriarClienteCommand request, CancellationToken cancellationToken)
         {
-            var cliente = new Cliente { NomeEmpresa = request.NomeEmpresa, Porte = request.Porte };
-            await _clienteRepositorio.AddAsync(cliente);
+            var cliente = new Cliente(request.NomeEmpresa, request.Porte);
+            await _clienteRepositorio.AddAsync(cliente, cancellationToken);
 
             await _mediator.Publish(new ClienteCriadoEvent(cliente.Id, cliente.NomeEmpresa, cliente.Porte), cancellationToken);
 

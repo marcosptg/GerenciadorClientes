@@ -19,12 +19,12 @@ namespace GerenciadorClientes.Application.Commands
 
         public async Task<bool> Handle(RemoverClienteCommand request, CancellationToken cancellationToken)
         {
-            var cliente = await _repository.GetByIdAsync(request.Id);
+            var cliente = await _repository.GetByIdAsync(request.Id, cancellationToken);
 
             if (cliente == null)
                 return false;
 
-            await _repository.RemoveAsync(cliente);
+            await _repository.RemoveAsync(cliente, cancellationToken);
 
             await _mediator.Publish(new ClienteRemovidoEvent(cliente.Id), cancellationToken);
 

@@ -19,15 +19,15 @@ namespace GerenciadorClientes.Application.Commands
 
         public async Task<bool> Handle(AtualizarClienteCommand request, CancellationToken cancellationToken)
         {
-            var cliente = await _clienteAggregationRepository.GetByIdAsync(request.Id);
+            var cliente = await _clienteAggregationRepository.GetByIdAsync(request.Id, cancellationToken);
 
             if (cliente == null)
                 return false;
 
-            cliente.NomeEmpresa = request.NomeEmpresa;
-            cliente.Porte = request.Porte;
+            cliente.AddNomeEmpresa(request.NomeEmpresa);
+            cliente.AddPorteEmpresa(request.Porte);
 
-            await _clienteAggregationRepository.UpdateAsync(cliente);
+            await _clienteAggregationRepository.UpdateAsync(cliente, cancellationToken);
 
             await _mediator.Publish(new ClienteAtualizadoEvent(cliente.Id, cliente.NomeEmpresa, cliente.Porte), cancellationToken);
 

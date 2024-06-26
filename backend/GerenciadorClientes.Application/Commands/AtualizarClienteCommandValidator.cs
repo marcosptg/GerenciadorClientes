@@ -7,6 +7,10 @@ namespace GerenciadorClientes.Application.Commands
     {
         public AtualizarClienteCommandValidator()
         {
+            RuleFor(x => x.NomeEmpresa)
+                 .MaximumLength(250)
+                 .WithMessage("O nome da empresa deve ter no máximo 250 caracteres.");
+
             RuleFor(x => x.Porte)
                 .Must(porte => Enum.IsDefined(typeof(PorteEmpresa), porte))
                 .WithMessage("O valor fornecido para Porte está fora do intervalo permitido.");

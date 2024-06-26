@@ -15,7 +15,7 @@ namespace GerenciadorClientes.Application.Queries
 
         public async Task<ClienteModel> Handle(ObterClientePorIdQuery request, CancellationToken cancellationToken)
         {
-            return await _repository.GetByIdAsync(request.Id);
+            return await _repository.GetByIdAsync(request.Id, cancellationToken);
         }
     }
 

@@ -24,13 +24,13 @@ namespace GerenciadorClientes.Tests.Application.EventHandlers
         {
             // Arrange
             var clienteRemovidoEvent = new ClienteRemovidoEvent(1);
-            _clienteProjectionRepository.RemoveAsync(1).Returns(true);
+            _clienteProjectionRepository.RemoveAsync(1, CancellationToken.None).Returns(true);
 
             // Act
             await _handler.Handle(clienteRemovidoEvent, CancellationToken.None);
 
             // Assert
-            await _clienteProjectionRepository.Received(1).RemoveAsync(1);
+            await _clienteProjectionRepository.Received(1).RemoveAsync(1, CancellationToken.None);
         }
 
         [Fact]
@@ -38,13 +38,13 @@ namespace GerenciadorClientes.Tests.Application.EventHandlers
         {
             // Arrange
             var clienteRemovidoEvent = new ClienteRemovidoEvent(1);
-            _clienteProjectionRepository.RemoveAsync(1).Returns(false);
+            _clienteProjectionRepository.RemoveAsync(1, CancellationToken.None).Returns(false);
 
             // Act
             await _handler.Handle(clienteRemovidoEvent, CancellationToken.None);
 
             // Assert
-            await _clienteProjectionRepository.Received(1).RemoveAsync(1);
+            await _clienteProjectionRepository.Received(1).RemoveAsync(1, CancellationToken.None);
             _logger.Received(1).LogError(Arg.Any<Exception>(), "Erro ao processar ClienteRemovidoEvent");
         }
     }

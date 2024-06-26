@@ -25,15 +25,15 @@ namespace GerenciadorClientes.Tests.Application.Commands
         public async Task Handle_ShouldRemoveClienteAndPublishEvent()
         {
             // Arrange
-            var cliente = new Cliente { Id = 1, NomeEmpresa = "Empresa Z", Porte = PorteEmpresa.Pequena };
+            var cliente = new Cliente(1, "Empresa Z", PorteEmpresa.Pequena);
             var command = new RemoverClienteCommand(cliente.Id);
-            _clienteRepository.GetByIdAsync(cliente.Id).Returns(cliente);
+            _clienteRepository.GetByIdAsync(cliente.Id, CancellationToken.None).Returns(cliente);
 
             // Act
             var result = await _handler.Handle(command, CancellationToken.None);
 
             // Assert
-            await _clienteRepository.Received(1).RemoveAsync(cliente);
+            await _clienteRepository.Received(1).RemoveAsync(cliente, CancellationToken.None);
             await _mediator.Received(1).Publish(Arg.Any<ClienteRemovidoEvent>(), CancellationToken.None);
             Assert.True(result);
         }

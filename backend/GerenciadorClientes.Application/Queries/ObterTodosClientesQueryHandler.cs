@@ -12,7 +12,7 @@ namespace GerenciadorClientes.Application.Queries
             _clienteReadRepository = clienteReadRepository;
 
         public Task<List<ClienteModel>> Handle(ObterTodosClientesQuery request, CancellationToken cancellationToken) =>
-            _clienteReadRepository.GetAllAsync();
+            _clienteReadRepository.GetAllAsync(cancellationToken);
     }
 
 }
