@@ -6,19 +6,19 @@ Este projeto é uma implementação de uma API de gerenciamento de clientes segu
 
 - **.NET 8**: Framework utilizado para o desenvolvimento da aplicação.
 - **Entity Framework Core**: Para interagir com o banco de dados relacional (SQL Server LocalDB).
-- **MongoDB**: Banco de dados NoSQL local utilizado para leitura.
+- **SQL Server LocalDB**: Banco de dados relacional para escrita e local para facilitar a execução.
+- **MongoDB**: Banco de dados NoSQL utilizado para leitura.
 - **MediatR**: Para mensageria interna e implementação do padrão CQRS.
 - **Swagger**: Para documentação e testes da API.
-- **SQL Server LocalDB**: Banco de dados relacional para facilitar a execução local.
-- **FluentValidation**: Para validação de comandos e consultas.
+- **FluentValidation**: Para validação de comandos.
 - **SPA (Single Page Application)**: Implementação de frontend utilizando Angular.
 - **Karma e Jasmine**: Frameworks de teste para a frontend Angular.
-- **NSubstitute e xUnit**: Para testes unitários no backend.
+- **xUnit e NSubstitute**: Para testes unitários no backend.
 
 ## Arquitetura
 
-- **Domain**: Contém as entidades de domínio e eventos.
-- **Application**: Contém comandos, consultas, manipuladores e interfaces de repositório de leitura.
+- **Domain**: Contém as entidades de domínio, eventos e interfaces de repositórios.
+- **Application**: Contém comandos, consultas, manipuladores.
 - **Infrastructure**: Contém a implementação dos repositórios e contextos de dados.
 - **API**: Camada de apresentação, contém os controladores.
 - **Frontend**: Implementação de Single Page Application (SPA) para interação com a API.
@@ -31,30 +31,9 @@ Este projeto é uma implementação de uma API de gerenciamento de clientes segu
 - **Validação com FluentValidation**: Validações de comandos de entrada.
 - **Interface SPA**: Interface de usuário moderna e reativa utilizando o framework de SPA Angular.
 
-## Executando o Projeto
-
-### Pré-requisitos
-
-- **.NET 8 SDK**: [Download .NET 8](https://dotnet.microsoft.com/download/dotnet/8.0)
-- **MongoDB**: Instale e execute uma instância local do MongoDB [Download MongoDB](https://www.mongodb.com/try/download/community)
-- **Node.js**: Para executar a aplicação SPA [Download Node.js](https://nodejs.org/)
-
-### Configuração
-
-### Instalar o `dotnet-ef` e criar banco SQL Server local
-
-Para utilizar as ferramentas do Entity Framework Core, é necessário instalar a ferramenta `dotnet-ef` globalmente:
-
-```sh
-dotnet tool install --global dotnet-ef
-```
-
-E após executar o comando:
-```sh
-dotnet ef database update
-```
-
 ## Estrutura do Projeto
+
+```sh
 GerenciadorClientes/
 │
 ├── backend/
@@ -77,11 +56,10 @@ GerenciadorClientes/
 │   │   ├── Repositories/
 │   │   └── ...
 │   └── GerenciadorClientes.Tests/
-│       ├── Application/
-│       │   ├── Commands/
-│       │   ├── Queries/
-│       │   ├── EventHandlers/
-│       │   └── ...
+│       ├── Commands/
+│       ├── Queries/
+│       ├── EventHandlers/
+│       └── ...
 │
 ├── frontend/
 │   ├── gerenciador-clientes.frontend/
@@ -99,16 +77,38 @@ GerenciadorClientes/
 │       │   └── main.ts
 │
 └── README.md
+```
 
 ## Back-end
 
-O backend é desenvolvido utilizando .NET 8, seguindo os princípios do Domain-Driven Design (DDD) e CQRS. Utilizamos Entity Framework Core para interação com o banco de dados SQL Server LocalDB e MongoDB para a leitura. A comunicação entre componentes é feita utilizando MediatR.
+O backend é desenvolvido utilizando .NET 8, seguindo os princípios do Domain-Driven Design (DDD) e CQRS. Utilizamos Entity Framework Core para interação com o banco de dados SQL Server LocalDB para escrita e MongoDB para a leitura. A comunicação entre componentes é feita utilizando MediatR.
 
-### Testes Unitários
+### Configuração
+
+#### Pré-requisitos
+
+- **.NET 8 SDK**: [Download .NET 8](https://dotnet.microsoft.com/download/dotnet/8.0)
+- **MongoDB**: Instale e execute uma instância local do MongoDB [Download MongoDB](https://www.mongodb.com/try/download/community)
+- **Node.js**: Para executar a aplicação SPA [Download Node.js](https://nodejs.org/)
+
+#### Instalar o `dotnet-ef` e criar SQL Server local
+
+Para utilizar as ferramentas do Entity Framework Core, é necessário instalar a ferramenta `dotnet-ef` globalmente:
+
+```sh
+dotnet tool install --global dotnet-ef
+```
+
+E após executar o comando para criar banco de dados SQL Server local:
+```sh
+dotnet ef database update
+```
+
+#### Testes Unitários
 
 Os testes unitários para comandos, consultas e manipuladores de eventos são implementados utilizando xUnit e NSubstitute para mock. Estes testes garantem a integridade das operações de criação, leitura, atualização e exclusão (CRUD) e a correta publicação de eventos.
 
-### Executando os Testes
+##### Executando os Testes
 
 Para executar os testes unitários, utilize o seguinte comando no diretório do projeto de testes:
 
@@ -141,8 +141,9 @@ ng test
 ```
 
 ## Informações Complementares
-Uso da Biblioteca SpaProxy
+
+### Uso da Biblioteca SpaProxy
 Utilizamos a biblioteca Microsoft.AspNetCore.SpaProxy para facilitar o desenvolvimento da aplicação. Esta biblioteca permite redirecionar solicitações de uma aplicação ASP.NET Core para uma aplicação SPA em execução, permitindo desenvolvimento e depuração mais simples e integrados.
 
-Estrutura do Projeto
-Todo o código do backend e frontend está contido em uma única solução, organizada em pastas backend e frontend para facilitar a navegação e a manutenção.
+## Estrutura da Solução
+Todo o código do backend e frontend está contido em uma única solução e repositório, organizada em pastas backend e frontend para facilitar a navegação e a execução do projeto.
