@@ -1,0 +1,54 @@
+version: '3.5'
+services:
+  gerenciadorclientes:
+    build:
+      context: .
+    ports:
+      - 8080:80
+    environment:
+      - ConnectionStrings__SqlServer=Server=GerenciadorClientes.database,1433;Database=GerenciadorClientes;User Id=SA;Password=0^5N1eb8ll5@G!O22wnow#Vn@;TrustServerCertificate=True;
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HOSTINGSTARTUPASSEMBLIES=Microsoft.AspNetCore.SpaProxy
+      - ConnectionStrings__MongoDb=mongodb://mongodb:27017
+      - MongoDbSettings__DatabaseName=GerenciadorClientes
+    depends_on:
+      - GerenciadorClientes.database
+      - mongodb
+    networks:
+      - GerenciadorClientes
+
+  GerenciadorClientes.database:
+    container_name: "GerenciadorClientes.database"
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    ports:
+      - "8001:1433"
+    volumes:
+      - GerenciadorClientes.database:/var/opt/mssql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Developer"
+      SA_PASSWORD: "0^5N1eb8ll5@G!O22wnow#Vn@"
+    networks:
+      - GerenciadorClientes
+
+  mongodb:
+    image: mongo
+    container_name: mongodb
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - GerenciadorClientes
+
+volumes:
+  GerenciadorClientes.database:
+    name: GerenciadorClientes.database
+    external: false
+  mongodb_data:
+
+networks:
+  GerenciadorClientes:
+    name: GerenciadorClientes
+    driver: bridge
