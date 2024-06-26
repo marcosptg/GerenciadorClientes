@@ -91,7 +91,7 @@ O backend é desenvolvido utilizando .NET 8, seguindo os princípios do Domain-D
 - **MongoDB**: Instale e execute uma instância local do MongoDB [Download MongoDB](https://www.mongodb.com/try/download/community)
 - **Node.js**: Para executar a aplicação SPA [Download Node.js](https://nodejs.org/)
 
-#### Instalar o `dotnet-ef` e criar SQL Server local
+#### Instalar o `dotnet-ef` para executar as migrations e criar o SQL Server local
 
 Para utilizar as ferramentas do Entity Framework Core, é necessário instalar a ferramenta `dotnet-ef` globalmente:
 
@@ -99,7 +99,7 @@ Para utilizar as ferramentas do Entity Framework Core, é necessário instalar a
 dotnet tool install --global dotnet-ef
 ```
 
-E após executar o comando para criar banco de dados SQL Server local:
+E após executar o comando para criar banco de dados SQL Server local e executar as migrations:
 ```sh
 dotnet ef database update
 ```
